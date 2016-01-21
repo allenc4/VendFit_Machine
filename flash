@@ -1,0 +1,3 @@
+sudo rm core*
+sudo particle compile core .
+sudo particle flash --usb core*
