@@ -10,6 +10,7 @@ VendingMachine::~VendingMachine(){
 }
 
 bool VendingMachine::vend(ItemType type){
+	this->ready = false;
 	bool vended = false;
 	for(int i = 0; i < this->numberOfDispensers; i++)
 	{
@@ -19,7 +20,7 @@ bool VendingMachine::vend(ItemType type){
 			vended = true;
 		}
 	}
-
+	this->ready = true;
 	return vended;
 }
 
