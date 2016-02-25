@@ -1,0 +1,27 @@
+#include "Dispenser.h"
+
+Dispenser::Dispenser(uint8_t pin){
+	this->servo.attach(pin);
+}
+
+Dispenser::vend(){
+	this->servo.write(0);
+	delay(1000);
+	this->servo.write(180);
+}
+
+ItemType Dispenser::getType(){
+	return this->type;
+}
+
+void Dispenser::setType(ItemType type){
+	this->type = type;
+}
+
+int Dispenser::getStock(){
+	return this->stock;
+}
+
+void Dispenser::setStock(int stock){
+	this->stock = stock;
+}
