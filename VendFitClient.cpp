@@ -23,7 +23,6 @@ void VendFitClient::stayConnected(){
         {
         	Serial.println("Couldn't Connect");
             delay(1000);
-            this->client.stop();
         }
     }
 }
@@ -34,62 +33,48 @@ void VendFitClient::sendData(std::string content){
     client.flush();
 }
 
-void VendFitClient::parseResponse(char &opcode, int length){
-	// do{
- //      if(Serial.available() > 0 && processing == false)
- //     {
- //        incomingByte = Serial.read();
+void VendFitClient::flush()
+{
+	long startTime = millis();
+	while (client.available() == false && millis() - startTime < 1000) {
+		// Just wait up to 1000 millis
+	}
+	startTime = millis();
+	while (client.available() > 0 && millis() - startTime < 1000) {
+	client.read();
+	}
+}
 
- //        Serial.print("Received: ");
- //        Serial.println(incomingByte);
+bool VendFitClient::parseResponse(char * opcode, int length){
+	int incomingByte = 0;
+	int currentIndex = 0;
+	long startTime = millis();
+	while(this->client.available() && incomingByte != 10 && currentIndex < length && millis() - startTime < 5000)
+	{
+		incomingByte = client.read();
+		if(currentIndex >= length)
+		{
+			currentIndex = 0;
+			this->flush();
+			this->sendData("{\"success\": false, \"message\":\"Invalid opcode\"}");
+			Serial.println("Invalid opcode");
+			return false;
+		}else
+		{
+			if(incomingByte == 10)
+			{
+				break;
+			}else
+			{
+				opcode[currentIndex] = incomingByte;
+		        currentIndex++;
+			}
+		}
+	}
 
- //        if(currentIndex > NUMBER_OF_BYTES)
- //        {
- //            Serial.print("ERROR: Invalid code.  Code Length max (");
- //            Serial.print(NUMBER_OF_BYTES);
- //            Serial.println(")");
- //            currentIndex = 0;
- //        }else
- //        {
- //            if(incomingByte == 10)
- //            {
- //              break;
- //            }else
- //            {
- //                opcode[currentIndex] = incomingByte;
- //                currentIndex++;
- //            }
- //        }
- //     }
- //  }while(incomingByte != 10);
-
- //  incomingByte = 0;
- //  currentIndex = 0;
- //  processing = true;
-
- //  for(int i = 0; i < NUMBER_OF_BYTES; i++)
- //  {
- //      if(opcode[i] == 10)
- //      {
- //        break;
- //      }
-      
- //      Serial.print(opcode[i]);
- //  }
-
- //  switch(opcode[0])
- //  {
-
- //      case 'v':
- //          vend(opcode[1]-48); //convert from ascii to decimal 48 is ascii for 0
- //          processing = false;
- //        break;
- //      default:
- //        Serial.print("ERROR: Invalid opcode (");
- //        Serial.print(opcode[0]);
- //        Serial.println(")");
- //        processing = false;
- //        break;
-
- //  }
+	if(currentIndex > 0)
+	{
+		return true;
+	}
+	return false;
 }

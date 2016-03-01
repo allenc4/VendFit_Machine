@@ -16,12 +16,19 @@ public:
 	void checkin();
 	void registration();
 	void initClient(IPAddress ip, int port);
+	bool checkResponse();
+	char * getOpCode();
+	int getOpCodeLength();
 private:
 	VendFitClient client;
 	Dispenser * dispensers;
 	int numberOfDispensers;
 	bool ready;
 	std::string id;
+	bool hasResponse;
+	int opcodeLength = 8;
+	char * opcode;
+
 };
 
 #endif

@@ -5,6 +5,8 @@ VendingMachine::VendingMachine(std::string id, int numberOfDispensers, uint8_t *
 	this->dispensers = new Dispenser[numberOfDispensers];
 	this->numberOfDispensers = numberOfDispensers;
 
+	this->opcode = new char[this->opcodeLength];
+
 	for(int i = 0; i < numberOfDispensers; i++)
 	{
 		this->dispensers[i] = Dispenser(pins[i]);
@@ -41,6 +43,7 @@ void VendingMachine::stayAlive(){
 void VendingMachine::checkin(){
 	this->client.connect();
 	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifer\": \""+this->id+"\"}}");
+	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);
 }
 
 void VendingMachine::initClient(IPAddress ip, int port){
@@ -50,4 +53,17 @@ void VendingMachine::initClient(IPAddress ip, int port){
 void VendingMachine::registration(){
 	this->client.connect();
 	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifer\": \""+this->id+"\"}}");
+	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);
+}
+
+bool VendingMachine::checkResponse(){
+	return this->hasResponse;
+}
+
+char * VendingMachine::getOpCode(){
+	return this->opcode;
+}
+
+int VendingMachine::getOpCodeLength(){
+	return this->opcodeLength;
 }

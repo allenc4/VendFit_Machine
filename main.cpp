@@ -29,5 +29,13 @@ void loop()
 { 
   	vm->stayAlive();
   	vm->checkin();
-  	delay(10000);
+  	if(vm->checkResponse())
+  	{
+  		for(int i = 0; i < vm->getOpCodeLength(); i++)
+  		{
+  			Serial.print(vm->getOpCode()[i]);
+  		}
+  	}
+  	Serial.println("");
+  	delay(500);
 }

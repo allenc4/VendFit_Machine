@@ -14,7 +14,8 @@ public:
 	void connect();
 	void stayConnected();
 	void sendData(std::string content);
-	void parseResponse(char &opcode, int length);
+	bool parseResponse(char * opcode, int length);
+	void flush();
 private:
 	IPAddress ip;
 	int port;
