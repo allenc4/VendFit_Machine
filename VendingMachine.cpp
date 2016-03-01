@@ -1,8 +1,14 @@
 #include "VendingMachine.h"
 
-VendingMachine::VendingMachine(int numberOfDispensers){
+VendingMachine::VendingMachine(std::string id, int numberOfDispensers, uint8_t *pins){
+	this->id = id;
 	this->dispensers = new Dispenser[numberOfDispensers];
 	this->numberOfDispensers = numberOfDispensers;
+
+	for(int i = 0; i < numberOfDispensers; i++)
+	{
+		this->dispensers[i] = Dispenser(pins[i]);
+	}
 }
 
 VendingMachine::~VendingMachine(){
@@ -14,9 +20,9 @@ bool VendingMachine::vend(ItemType type){
 	bool vended = false;
 	for(int i = 0; i < this->numberOfDispensers; i++)
 	{
-		if(this->dispensers[i]->getType() == type && this->dispensers[i]->getStock() > 0)
+		if(this->dispensers[i].getType() == type && this->dispensers[i].getStock() > 0)
 		{
-			this->dispensers[i]->vend();
+			this->dispensers[i].vend();
 			vended = true;
 		}
 	}
@@ -26,4 +32,17 @@ bool VendingMachine::vend(ItemType type){
 
 bool VendingMachine::isReady(){
 	return this->ready;
+}
+
+void VendingMachine::stayAlive(){
+	this->client.stayConnected();
+}
+
+void VendingMachine::checkIn(){
+	this->client.connect();
+	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifer\": \""+this->id+"\"}}");
+}
+
+void VendingMachine::initClient(IPAddress ip, int port){
+	this->client = VendFitClient(ip, port);
 }

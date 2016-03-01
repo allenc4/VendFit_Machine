@@ -16,6 +16,8 @@
 #include "spark_wiring_tcpserver.h"
 #include "spark_wiring_udp.h"
 #include "spark_wiring_time.h"
-#include <string.h>
+#include "evnt_handler.h"
+#include <string>
+#include "VendingMachine.h"
 
 #endif

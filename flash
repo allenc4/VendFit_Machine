@@ -1,3 +1,3 @@
 sudo rm core*
-sudo spark compile core .
-sudo spark flash --usb core*
+sudo particle compile core .
+sudo particle flash --usb core*

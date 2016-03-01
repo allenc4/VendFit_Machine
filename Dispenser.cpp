@@ -2,9 +2,10 @@
 
 Dispenser::Dispenser(uint8_t pin){
 	this->servo.attach(pin);
+	this->servo.write(180);
 }
 
-Dispenser::vend(){
+void Dispenser::vend(){
 	this->servo.write(0);
 	delay(1000);
 	this->servo.write(180);

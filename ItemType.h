@@ -1,6 +1,8 @@
-#ifdef _ITEMTYPE_
+#ifndef _ITEMTYPE_
 #define _ITEMTYPE_
 
 enum ItemType{
 	WATER, GATORADE
 };
+
+#endif
