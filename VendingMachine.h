@@ -13,7 +13,8 @@ public:
 	bool vend(ItemType type);
 	bool isReady();
 	void stayAlive();
-	void checkIn();
+	void checkin();
+	void registration();
 	void initClient(IPAddress ip, int port);
 private:
 	VendFitClient client;

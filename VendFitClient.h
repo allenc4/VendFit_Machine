@@ -18,7 +18,7 @@ public:
 private:
 	IPAddress ip;
 	int port;
-	std::string END;
+	std::string END = "<END>";
 	TCPClient client;
 };
 

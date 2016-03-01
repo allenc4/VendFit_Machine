@@ -23,13 +23,13 @@ void VendFitClient::stayConnected(){
         {
         	Serial.println("Couldn't Connect");
             delay(1000);
-            Particle.process();
             this->client.stop();
         }
     }
 }
 
 void VendFitClient::sendData(std::string content){
+	content+=this->END;
 	client.write(content.c_str());
     client.flush();
 }

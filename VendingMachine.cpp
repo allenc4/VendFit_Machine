@@ -38,11 +38,16 @@ void VendingMachine::stayAlive(){
 	this->client.stayConnected();
 }
 
-void VendingMachine::checkIn(){
+void VendingMachine::checkin(){
 	this->client.connect();
 	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifer\": \""+this->id+"\"}}");
 }
 
 void VendingMachine::initClient(IPAddress ip, int port){
 	this->client = VendFitClient(ip, port);
+}
+
+void VendingMachine::registration(){
+	this->client.connect();
+	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifer\": \""+this->id+"\"}}");
 }
