@@ -21,21 +21,54 @@ void setup()
   	vm->initClient(ip, port);
   	vm->registration();
   	Serial.println("Setup complete");
-  	Spark.variable("test", &port, INT);
 } 
 
 
 void loop() 
 { 
   	vm->stayAlive();
-  	vm->checkin();
+    vm->parseResponse();
+
   	if(vm->checkResponse())
   	{
+      Serial.print("RESPONSE: ");
   		for(int i = 0; i < vm->getOpCodeLength(); i++)
   		{
   			Serial.print(vm->getOpCode()[i]);
   		}
+      Serial.println("");
+
+      switch(vm->getOpCode()[0]){
+
+        case 'v':
+          bool good = false;
+          switch(vm->getOpCode()[1]){
+            case 'w':
+              //water
+              good = vm->vend(WATER);
+              break;
+            case 'r':
+              //gat red
+              good = vm->vend(GATORADE_RED);
+              break;
+            case 'b':
+              //gat blue
+              good = vm->vend(GATORADE_BLUE);
+              break;
+            case 'y':
+              //gat yellow
+              good = vm->vend(GATORADE_YELLOW);
+              break;
+            case 'o':
+              //gat orange
+              good = vm->vend(GATORADE_ORANGE);
+              break;
+          }
+
+          vm->getClient().sendData("{\"success\": "+std::string(good ? "true" : "false")+" }");
+          break;
+
+      }
   	}
-  	Serial.println("");
   	delay(500);
 }

@@ -43,7 +43,6 @@ void VendingMachine::stayAlive(){
 void VendingMachine::checkin(){
 	this->client.connect();
 	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifer\": \""+this->id+"\"}}");
-	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);
 }
 
 void VendingMachine::initClient(IPAddress ip, int port){
@@ -53,7 +52,6 @@ void VendingMachine::initClient(IPAddress ip, int port){
 void VendingMachine::registration(){
 	this->client.connect();
 	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifer\": \""+this->id+"\"}}");
-	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);
 }
 
 bool VendingMachine::checkResponse(){
@@ -66,4 +64,12 @@ char * VendingMachine::getOpCode(){
 
 int VendingMachine::getOpCodeLength(){
 	return this->opcodeLength;
+}
+
+void VendingMachine::parseResponse(){
+	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);	
+}
+
+VendFitClient VendingMachine::getClient(){
+	return this->client;
 }

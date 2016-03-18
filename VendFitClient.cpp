@@ -49,9 +49,25 @@ bool VendFitClient::parseResponse(char * opcode, int length){
 	int incomingByte = 0;
 	int currentIndex = 0;
 	long startTime = millis();
+	Serial.print("Parsing response: ");
+	Serial.print(startTime);
+	Serial.print(" ");
+	Serial.print(millis());
+	Serial.print(" ");
+	Serial.print(millis() - startTime);
+	Serial.print(" ");
+	Serial.print(this->client.available());
+	Serial.print(" ");
+	Serial.print(incomingByte);
+	Serial.print(" ");
+	Serial.print(currentIndex);
+	Serial.print(" ");
+	Serial.println(length);
 	while(this->client.available() && incomingByte != 10 && currentIndex < length && millis() - startTime < 5000)
 	{
 		incomingByte = client.read();
+		Serial.print("Received: ");
+		Serial.println(incomingByte);
 		if(currentIndex >= length)
 		{
 			currentIndex = 0;
@@ -71,6 +87,7 @@ bool VendFitClient::parseResponse(char * opcode, int length){
 			}
 		}
 	}
+	this->flush();
 
 	if(currentIndex > 0)
 	{

@@ -19,6 +19,8 @@ public:
 	bool checkResponse();
 	char * getOpCode();
 	int getOpCodeLength();
+	void parseResponse();
+	VendFitClient getClient();
 private:
 	VendFitClient client;
 	Dispenser * dispensers;
