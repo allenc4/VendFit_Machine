@@ -5,7 +5,7 @@
 
 VendingMachine * vm;
 
- int dispenserPins[4] = {0, 1, 4, 5};
+int dispenserPins[4] = {2, 4, 17, 22};
 
 std::string host = "tgauch.net";
 

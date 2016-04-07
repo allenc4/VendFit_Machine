@@ -1,14 +1,18 @@
 #include "../inc/Dispenser.h"
 
 Dispenser::Dispenser(int pin){
-	// this->servo.attach(pin);
-	// this->servo.write(180);
+	this->pin = pin;
+	gpioServo(pin, PWM_RIGHT);
+	usleep(750000);  // delay for 750 milliseconds 
+	gpioServo(pin, PWM_OFF);
 }
 
 void Dispenser::vend(){
-	// this->servo.write(0);
-	// delay(1000);
-	// this->servo.write(180);
+	gpioServo(this->pin, PWM_LEFT);
+	usleep(750000);
+	gpioServo(this->pin, PWM_RIGHT);
+	usleep(750000);
+	gpioServo(this->pin, PWM_OFF);
 }
 
 ItemType Dispenser::getType(){
