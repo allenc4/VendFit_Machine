@@ -17,19 +17,15 @@ VendingMachine::~VendingMachine(){
 	delete[] this->dispensers;
 }
 
-bool VendingMachine::vend(ItemType type){
-	this->ready = false;
-	bool vended = false;
-	for(int i = 0; i < this->numberOfDispensers; i++)
+bool VendingMachine::vend(int index){
+	if(index < this->numberOfDispensers && index >= 0)
 	{
-		if(this->dispensers[i].getType() == type && this->dispensers[i].getStock() > 0)
-		{
-			this->dispensers[i].vend();
-			vended = true;
-		}
+		this->dispensers[index].vend();
+		return true;
+	}else
+	{
+		return false;
 	}
-	this->ready = true;
-	return vended;
 }
 
 bool VendingMachine::isReady(){
