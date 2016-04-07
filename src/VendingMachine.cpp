@@ -4,6 +4,7 @@ VendingMachine::VendingMachine(std::string id, int numberOfDispensers, int *pins
 	this->id = id;
 	this->dispensers = new Dispenser[numberOfDispensers];
 	this->numberOfDispensers = numberOfDispensers;
+	this->opcodeLength = 8;
 
 	this->opcode = new char[this->opcodeLength];
 

@@ -22,8 +22,8 @@ public:
 private:
 	std::string host;
 	int port;
-	std::string END = "<END>";
-	int socketFD = -1;
+	std::string END;
+	int socketFD;
 	struct sockaddr_in server;
 };
 

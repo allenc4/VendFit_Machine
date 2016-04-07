@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++1 -lstdc++ -lpigpio -lrt
+CFLAGS=-c -Wall -lstdc++ -lpigpio -lrt
 SRC=./src
 INC=./inc
 BIN=./bin
