@@ -8,19 +8,20 @@
 
 class VendingMachine{
 public:
-	VendingMachine(std::string id, int numberOfDispensers, uint8_t *pins);
+	VendingMachine(std::string id, int numberOfDispensers, int *pins);
 	~VendingMachine();
 	bool vend(ItemType type);
 	bool isReady();
 	void stayAlive();
 	void checkin();
 	void registration();
-	void initClient(IPAddress ip, int port);
+	void initClient(std::string host, int port);
 	bool checkResponse();
 	char * getOpCode();
 	int getOpCodeLength();
-	void parseResponse();
+	int parseResponse();
 	VendFitClient getClient();
+	void updateDispenser(int id, int stock, ItemType type);
 private:
 	VendFitClient client;
 	Dispenser * dispensers;

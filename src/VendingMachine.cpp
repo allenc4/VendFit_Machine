@@ -1,6 +1,6 @@
-#include "VendingMachine.h"
+#include "../inc/VendingMachine.h"
 
-VendingMachine::VendingMachine(std::string id, int numberOfDispensers, uint8_t *pins){
+VendingMachine::VendingMachine(std::string id, int numberOfDispensers, int *pins){
 	this->id = id;
 	this->dispensers = new Dispenser[numberOfDispensers];
 	this->numberOfDispensers = numberOfDispensers;
@@ -41,17 +41,15 @@ void VendingMachine::stayAlive(){
 }
 
 void VendingMachine::checkin(){
-	this->client.connect();
-	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifer\": \""+this->id+"\"}}");
+	this->client.sendData("{\"operation\": \"machine_checkin\", \"data\": {\"identifier\": \""+this->id+"\"}}");
 }
 
-void VendingMachine::initClient(IPAddress ip, int port){
-	this->client = VendFitClient(ip, port);
+void VendingMachine::initClient(std::string host, int port){
+	this->client = VendFitClient(host, port);
 }
 
 void VendingMachine::registration(){
-	this->client.connect();
-	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifer\": \""+this->id+"\"}}");
+	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifier\": \""+this->id+"\"}}");
 }
 
 bool VendingMachine::checkResponse(){
@@ -66,10 +64,15 @@ int VendingMachine::getOpCodeLength(){
 	return this->opcodeLength;
 }
 
-void VendingMachine::parseResponse(){
-	this->hasResponse = this->client.parseResponse(this->opcode, this->opcodeLength);	
+int VendingMachine::parseResponse(){
+	return this->client.parseResponse(this->opcode, this->opcodeLength);	
 }
 
 VendFitClient VendingMachine::getClient(){
 	return this->client;
+}
+
+void VendingMachine::updateDispenser(int id, int stock, ItemType type){
+	this->dispensers[id].setStock(stock);
+	this->dispensers[id].setType(type);
 }
