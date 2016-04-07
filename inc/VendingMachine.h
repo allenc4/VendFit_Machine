@@ -10,7 +10,7 @@ class VendingMachine{
 public:
 	VendingMachine(std::string id, int numberOfDispensers, int *pins);
 	~VendingMachine();
-	bool vend(ItemType type);
+	bool vend(int index);
 	bool isReady();
 	void stayAlive();
 	void checkin();

@@ -74,7 +74,7 @@ void loop()
       switch(vm->getOpCode()[0]){
         case 'v':
           {
-            bool good = vm->vend(getItemType(char2int(vm->getOpCode()[1])));
+            bool good = vm->vend(char2int(vm->getOpCode()[1]));
             vm->getClient().sendData("{\"operation\":\"machine_vend_response\", \"data\": {\"success\": "+std::string(good ? "true" : "false")+" }}");
             break;
           }
