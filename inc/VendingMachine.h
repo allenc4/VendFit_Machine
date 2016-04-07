@@ -29,7 +29,7 @@ private:
 	bool ready;
 	std::string id;
 	bool hasResponse;
-	int opcodeLength = 8;
+	int opcodeLength;
 	char * opcode;
 
 };

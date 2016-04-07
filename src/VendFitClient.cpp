@@ -3,6 +3,9 @@
 VendFitClient::VendFitClient(std::string host, int port){
 	this->host = host;
 	this->port = port;
+    this->socketFD = -1;
+    this->END = "<END>";
+    
 	this->stayConnected();
 }
 
