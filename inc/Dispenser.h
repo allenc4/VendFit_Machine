@@ -4,10 +4,12 @@
 #include <pigpio.h>
 #include "ItemType.h"
 #include <unistd.h>
+#include <iostream>
+#include <stdlib.h>
 
 #define PWM_OFF   0
-#define PWM_LEFT  750
-#define PWM_RIGHT 2000
+#define PWM_LEFT  2250
+#define PWM_RIGHT 750
 
 class Dispenser{
 public:

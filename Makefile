@@ -1,5 +1,7 @@
-CC=g++
-CFLAGS=-c -Wall -lstdc++ -lpigpio -lrt
+CC=g++ -Wall
+CFLAGS=-c
+DFLAGS=-lpigpio -lrt -lstdc++
+WFLAGS=-Wall
 SRC=./src
 INC=./inc
 BIN=./bin
@@ -7,7 +9,7 @@ BIN=./bin
 all: main
 
 main: Dispenser.o VendFitClient.o VendingMachine.o main.o
-	$(CC) $(BIN)/main.o $(BIN)/VendingMachine.o $(BIN)/VendFitClient.o $(BIN)/Dispenser.o -o $(BIN)/VendFitMachine
+	$(CC) $(DFLAGS) $(BIN)/main.o $(BIN)/VendingMachine.o $(BIN)/VendFitClient.o $(BIN)/Dispenser.o -o $(BIN)/VendFitMachine
 
 main.o: 
 	$(CC) $(CFLAGS) $(SRC)/main.cpp -o $(BIN)/main.o
@@ -19,7 +21,7 @@ VendFitClient.o:
 	$(CC) $(CFLAGS) $(SRC)/VendFitClient.cpp -o $(BIN)/VendFitClient.o
 
 Dispenser.o:
-	$(CC) $(CFLAGS) $(SRC)/Dispenser.cpp -o $(BIN)/Dispenser.o
+	$(CC) $(CFLAGS) $(DFLAGS) $(SRC)/Dispenser.cpp -o $(BIN)/Dispenser.o
 
 clean:
 	rm $(BIN)/*.o $(BIN)/VendFitMachine

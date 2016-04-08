@@ -1,6 +1,9 @@
 #include "../inc/Dispenser.h"
 
 Dispenser::Dispenser(int pin){
+	if (gpioInitialise() < 0) {
+		std::cout << "Error initializing pigpio!" << std::endl;
+	}
 	this->pin = pin;
 	gpioServo(pin, PWM_RIGHT);
 	usleep(750000);  // delay for 750 milliseconds 
