@@ -8,7 +8,7 @@
 
 class VendingMachine{
 public:
-	VendingMachine(std::string id, int numberOfDispensers, int *pins);
+	VendingMachine(std::string id, std::string ip, int numberOfDispensers, int *pins);
 	~VendingMachine();
 	bool vend(int index);
 	bool isReady();
@@ -31,6 +31,7 @@ private:
 	bool hasResponse;
 	int opcodeLength;
 	char * opcode;
+	std::string ip;
 
 };
 

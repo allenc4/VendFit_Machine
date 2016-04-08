@@ -9,7 +9,7 @@ int dispenserPins[4] = {2, 4, 17, 22};
 
 std::string host = "tgauch.net";
 
-std::string ID = "vendfit_machine_1";
+std::string ID = "tyler_test";
 
 int port = 8888;
 
@@ -49,7 +49,22 @@ ItemType getItemType(int id){
 
 void setup() 
 { 
-  	vm = new VendingMachine(ID, NUMBER_OF_DISPENSERS, dispenserPins);
+
+    int fd;
+    struct ifreq ifr;
+
+    fd = socket(AF_INET, SOCK_DGRAM, 0); 
+    ifr.ifr_addr.sa_family = AF_INET;
+    strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ-1);
+
+    ioctl(fd, SIOCGIFADDR, &ifr);
+    close(fd);
+
+    std::string ip = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
+
+    std::cout << ip << std::endl;
+
+  	vm = new VendingMachine(ID, ip, NUMBER_OF_DISPENSERS, dispenserPins);
 
   	vm->initClient(host, port);
   	vm->registration();
