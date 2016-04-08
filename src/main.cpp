@@ -9,7 +9,7 @@ int dispenserPins[4] = {2, 4, 17, 22};
 
 std::string host = "tgauch.net";
 
-std::string ID = "tyler_test";
+std::string ID = "vendfit_machine_1";
 
 int port = 8888;
 
