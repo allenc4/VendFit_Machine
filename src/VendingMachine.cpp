@@ -1,10 +1,11 @@
 #include "../inc/VendingMachine.h"
 
-VendingMachine::VendingMachine(std::string id, int numberOfDispensers, int *pins){
+VendingMachine::VendingMachine(std::string id, std::string ip, int numberOfDispensers, int *pins){
 	this->id = id;
 	this->dispensers = new Dispenser[numberOfDispensers];
 	this->numberOfDispensers = numberOfDispensers;
 	this->opcodeLength = 8;
+	this->ip = ip;
 
 	this->opcode = new char[this->opcodeLength];
 
@@ -46,7 +47,7 @@ void VendingMachine::initClient(std::string host, int port){
 }
 
 void VendingMachine::registration(){
-	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifier\": \""+this->id+"\"}}");
+	this->client.sendData("{\"operation\": \"machine_registration\", \"data\": {\"identifier\": \""+this->id+"\", \"ip\":\""+this->ip+"\"}}");
 }
 
 bool VendingMachine::checkResponse(){
